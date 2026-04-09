@@ -5,6 +5,12 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static edu.kis.powp.jobs2d.command.ShapesFactory.createCircle;
+import static edu.kis.powp.jobs2d.command.ShapesFactory.createRectangle;
+import static edu.kis.powp.jobs2d.command.ShapesFactory.createTriangle;
+
+import edu.kis.powp.jobs2d.command.ComplexCommand;
+
 import edu.kis.legacy.drawer.panel.DefaultDrawerFrame;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
@@ -40,7 +46,20 @@ public class TestJobs2dPatterns {
 				DriverFeature.getDriverManager(), 3
 		);
 		application.addTest("Figure Jane", selectTestFigureJaneListener);
-	}
+		application.addTest("Shapes Factory", (ActionEvent e) -> {
+			Job2dDriver current = DriverFeature.getDriverManager().getCurrentDriver();
+
+			ComplexCommand rectangle = createRectangle(current, 10, 10, 80, 40);
+			rectangle.execute();
+
+			ComplexCommand triangle = createTriangle(current, 0, 0, 0, 30, 30, 0);
+			triangle.execute();
+
+			ComplexCommand circle = createCircle(current, 120, 40, 35);
+			circle.execute();
+		});
+		}
+
 
 	/**
 	 * Setup driver manager, and set default driver for application.
